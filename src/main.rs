@@ -87,7 +87,6 @@ impl KrakenClient {
 
 }
 
-
 #[derive(Debug, Deserialize, Serialize)]
 struct Ohlc {
     time: f64,
@@ -184,8 +183,6 @@ impl TradingData {
         Ok(())
     }
 }
-
-
 
 fn main() {
 
