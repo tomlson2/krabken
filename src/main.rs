@@ -101,7 +101,7 @@ struct Ohlc {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
-struct Orderbook {
+struct OrderBook {
     asks: Vec<(String, String, u64)>,
     bids: Vec<(String, String, u64)>,
 }
@@ -114,12 +114,13 @@ struct Trade {
     buy_sell: String,
     market_limit: String,
     miscellaneous: String,
+    trade_id: f64,
 }
 
 struct TradingData {
     kraken_client: KrakenClient,
     ohlc_data: Option<Vec<Ohlc>>,
-    order_book_data: Option<Orderbook>,
+    order_book_data: Option<OrderBook>,
     trade_data: Option<Vec<Trade>>,
 }
 
@@ -148,72 +149,40 @@ impl TradingData {
         }?;
 
         let value: Value = serde_json::from_str(&response)?;
-        let prep = value["result"]["XXBTZUSD"].to_string();
+        let prep = &value["result"]["XXBTZUSD"].to_string();
         let data: Vec<Ohlc> = serde_json::from_str(&prep)?;
         self.ohlc_data = Some(data);
 
         Ok(())
     }
 
-    // fn get_order_book_data(
-    //     &mut self,
-    //     pair: &str,
-    //     count: u32,
-    // ) -> Result<(), reqwest::Error> {
-    //     let path = format!("/public/Depth?pair={}&count={}", pair, count);
-    //     let response = self.kraken_client.send_get(&path)?;
-    //     let data: KrakenResponse<OrderBook> = serde_json::from_str(&response)?;
+    fn get_order_book_data(
+        &mut self,
+        pair: &str,
+        count: u32,
+    ) -> Result<(), Box<dyn std::error::Error>> {
+        let path = format!("/0/public/Depth?pair={}&count={}", pair, count);
+        let response = self.kraken_client.send_get(&path)?;
+        let value: Value = serde_json::from_str(&response)?;
+        let prep = &value["result"]["XXBTZUSD"].to_string();
+        let data: OrderBook = serde_json::from_str(&prep)?;
+        self.order_book_data = Some(data);
+        Ok(())
+    }
 
-    //     let order_book_data = data.result.map(|x| orderbook {
-    //         asks: x
-    //             .get(pair)
-    //             .and_then(|v| v.asks.as_ref())
-    //             .map(|asks| {
-    //                 asks.iter()
-    //                     .map(|v| (v[0].to_string(), v[1].to_string(), v[2] as u64))
-    //                     .collect()
-    //             })
-    //             .unwrap_or_default(),
-    //         bids: x
-    //             .get(pair)
-    //             .and_then(|v| v.bids.as_ref())
-    //             .map(|bids| {
-    //                 bids.iter()
-    //                     .map(|v| (v[0].to_string(), v[1].to_string(), v[2] as u64))
-    //                     .collect()
-    //             })
-    //             .unwrap_or_default(),
-    //     });
+    fn get_trade_data(
+        &mut self, 
+        pair: &str
+    ) -> Result<(), Box<dyn std::error::Error>> {
+        let path = format!("/0/public/Trades?pair={}", pair);
+        let response = self.kraken_client.send_get(&path)?;
+        let value: Value = serde_json::from_str(&response)?;
+        let prep = &value["result"]["XXBTZUSD"].to_string();
+        let data: Vec<Trade> = serde_json::from_str(&prep)?;
+        self.trade_data = Some(data);
 
-    //     self.order_book_data = order_book_data;
-    //     Ok(())
-    // }
-
-    // fn get_trade_data(&mut self, pair: &str) -> Result<(), reqwest::Error> {
-    //     let path = format!("/public/Trades?pair={}", pair);
-    //     let response = self.kraken_client.send_get(&path)?;
-    //     let data: KrakenResponse<HashMap<String, Vec<KrakenTrade>>> =
-    //         serde_json::from_str(&response)?;
-
-    //     let trade_data = data
-    //         .result
-    //         .and_then(|mut x| x.remove(pair))
-    //         .map(|x| {
-    //             x.into_iter()
-    //                 .map(|v| trade {
-    //                     price: v.price.to_string(),
-    //                     volume: v.volume.to_string(),
-    //                     time: v.time,
-    //                     buy_sell: v.buy_sell,
-    //                     market_limit: v.market_limit,
-    //                     miscellaneous: v.miscellaneous,
-    //                 })
-    //                 .collect()
-    //         });
-
-    //     self.trade_data = trade_data;
-    //     Ok(())
-    // }
+        Ok(())
+    }
 }
 
 
@@ -227,11 +196,11 @@ fn main() {
 
     let mut trading_data = TradingData::new(kraken_client); 
     trading_data.get_ohlc_data("XBTUSD", "1", None, false); // get OHLC data for the XBT/USD pair, 1 minute interval, last 10 data points
+    trading_data.get_order_book_data("XBTUSD", 20);
+    trading_data.get_trade_data("XBTUSD");
     
-    if let Some(ohlc_data) = &trading_data.ohlc_data {
-        for ohlc in ohlc_data {
-            println!("Time: {}, Open: {}, High: {}, Low: {}, Close: {}, VWAP: {}, Volume: {}, Count: {}", ohlc.time, ohlc.open, ohlc.high, ohlc.low, ohlc.close, ohlc.vwap, ohlc.volume, ohlc.count);
-        }     
+    if let Some(ohlc_data) = &trading_data.trade_data {
+        println!("{:?}", ohlc_data)
     } else {
         println!("Fail");
     }
