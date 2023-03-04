@@ -179,7 +179,6 @@ impl TradingData {
         let prep = &value["result"]["XXBTZUSD"].to_string();
         let data: Vec<Trade> = serde_json::from_str(&prep)?;
         self.trade_data = Some(data);
-
         Ok(())
     }
 }
