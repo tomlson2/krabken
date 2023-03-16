@@ -1,5 +1,6 @@
 use reqwest::{
     header::{HeaderMap, HeaderValue},
+    header::{HeaderMap, HeaderValue},
 };
 use hmac::{Hmac, Mac, NewMac};
 use sha2::{Digest, Sha256, Sha512};
