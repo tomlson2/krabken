@@ -1,0 +1,13 @@
+
+
+# Generated Comment
+**/Cargo.lock
+
+# see https://github.com/rust-lang/cargo/issues/1231
+**/target/debug/**/incremental/*
+
+# build script output, "target/debug/build/<name>/output" directory
+**/target/debug/build/*/output
+
+# IntelliJ project definitions
+.idea
