@@ -1,0 +1,6 @@
+
+
+# Generated Comment
+Krabken is a command-line application for interacting with the Kraken cryptocurrency exchange. It provides robust features for both traders and investors, from creating and managing orders, to tracking market data and performing technical analysis.  
+
+Krabken is written in Rust, a programming language designed for safety, speed and efficiency, so that you can trust its reliability for trading and investing. With Krabken, you're able to place orders with minimal latency and reliably monitor your account in real-time. Likewise, Krabken has you covered when it comes to data analysis, providing comprehensive tools to track market trends and generate forecasts. Ultimately, Krabken enables you to take advantage of the evolving crypto markets like never before.
