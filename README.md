@@ -1,13 +1,36 @@
-# krabken
-rust &lt;> kraken
-### About
-This is a work in progress but hopefully it can grow into an easy to use rust program that can interact with the Kraken exchange. This is only my second attempt at building something substantial in Rust so it won't be perfect but there is a lot of learning about new libraries for creating API calls, parsing that data, and then working with that data to get what I want.
 
-### Functionality
-- [x] Handle authentication to Kraken using encrypted API-sign
-- [x] Build methods for client connection to get and post to API
-- [x] Create structure for querying and storing market data.
-- [ ] Trading functionality
-- [ ] Build out technical analysis and data tools
-- [ ] Manage requests and keep track of available requests before throttle
-- [ ] Paper trading
+
+
+This code is an implementation of the Kraken API. It provides a library of functions to access the Kraken exchange and fetch data such as current order book, OHLC (Open, High, Low, Close) data and trades.
+
+Requirements:
+- reqwest
+- hmac
+- sha2
+- serde
+- base64
+- serde_json
+
+Usage:
+1. Create a KrakenClient object with an api key and secret key, which can be obtained through the Kraken account.
+
+let config = Config {
+    key: String::from("your api key"),
+    secret: String::from("your secret key")
+};
+let mut kraken_client = KrakenClient::new(config);
+
+2. Create a TradingData object with the KrakenClient object. 
+
+let mut trading_data = TradingData::new(kraken_client);
+
+3. Use the TradingData object to access the Kraken data.
+
+// Get OHLC data
+trading_data.get_ohlc_data("XXBTZUSD", "1m", None, true).unwrap();
+
+// Get order book data
+trading_data.get_order_book_data("XXBTZUSD", 100).unwrap();
+
+// Get trade data 
+trading_data.get_trade_data("XXBTZUSD").unwrap();
