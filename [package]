@@ -1,0 +1,26 @@
+
+
+# Generated Comment
+[package]
+name = "krabken"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+reqwest = { version = "0.11", features = ["blocking"] }
+hmac = "0.11"
+base64 = "0.13"
+sha2 = "0.9"
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+config-file = "0.2.3"
+
+[dev-dependencies]
+log = "0.4"
+assert_cmd = "0.11"
+mockito = "0.21"
+# Testing framework
+# https://docs.rs/crate/test
+test = "1.0"

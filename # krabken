@@ -1,0 +1,4 @@
+
+
+# Generated Comment
+Krabken is a lightweight Rust library that enables users to interact with the Kraken cryptocurrency exchange. It allows users to make API requests to trade and retrieve data from Kraken. It also provides a structure for tracking market data and analytical data. Krabken supports paper trading functionality and provides methods for users to manage their requests and track available requests before throttling.
