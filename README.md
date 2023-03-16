@@ -1,13 +1,16 @@
-# krabken
-rust &lt;> kraken
-### About
-This is a work in progress but hopefully it can grow into an easy to use rust program that can interact with the Kraken exchange. This is only my second attempt at building something substantial in Rust so it won't be perfect but there is a lot of learning about new libraries for creating API calls, parsing that data, and then working with that data to get what I want.
 
-### Functionality
-- [x] Handle authentication to Kraken using encrypted API-sign
-- [x] Build methods for client connection to get and post to API
-- [x] Create structure for querying and storing market data.
-- [ ] Trading functionality
-- [ ] Build out technical analysis and data tools
-- [ ] Manage requests and keep track of available requests before throttle
-- [ ] Paper trading
+
+Requirements
+ - Rust Version: 1.42.0 or later
+ - hmac: 0.8.0 or later 
+ - reqwest: 0.10.7 or later
+ - sha2: 0.8.0 or later
+ - serde: 1.0.104 or later
+
+Usage
+1. In the terminal, type in:
+  cargo build
+2. To execute the code, type in:
+  cargo run
+3. Follow the prompts for configuration details and querying the API.
+4. Click enter to close the program.
