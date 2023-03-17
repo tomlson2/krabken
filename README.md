@@ -1,3 +1,4 @@
+
 # krabken
 rust &lt;> kraken
 ### About
@@ -11,3 +12,10 @@ This is a work in progress but hopefully it can grow into an easy to use rust pr
 - [ ] Build out technical analysis and data tools
 - [ ] Manage requests and keep track of available requests before throttle
 - [ ] Paper trading
+
+---
+config.json
+{
+    "key": "your key here",
+    "secret": "your secret here"
+}
