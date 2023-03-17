@@ -1,7 +1,9 @@
+
 # krabken
-rust &lt;> kraken
+Rust &lt;> Kraken
+
 ### About
-This is a work in progress but hopefully it can grow into an easy to use rust program that can interact with the Kraken exchange. This is only my second attempt at building something substantial in Rust so it won't be perfect but there is a lot of learning about new libraries for creating API calls, parsing that data, and then working with that data to get what I want.
+This is a work in progress but hopefully it can grow into an easy to use Rust program that can interact with the Kraken exchange. This is only my second attempt at building something substantial in Rust so it won't be perfect but there is a lot of learning about new libraries for creating API calls, parsing that data, and then working with that data to get what I want.
 
 ### Functionality
 - [x] Handle authentication to Kraken using encrypted API-sign
